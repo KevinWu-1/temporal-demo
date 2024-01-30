@@ -1,0 +1,51 @@
+{
+  "name": "temporal-farewell-workflow",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc --build",
+    "build.watch": "tsc --build --watch",
+    "lint": "eslint .",
+    "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "service": "ts-node src/service.ts",
+    "service.watch": "nodemon src/service.ts",
+    "worker": "ts-node src/worker.ts",
+    "worker.watch": "nodemon src/worker.ts",
+    "greeting": "ts-node src/clients/greeting.ts",
+    "login": "ts-node src/clients/login.ts",
+    "farewell": "ts-node src/clients/farewell.ts"
+  },
+  "nodemonConfig": {
+    "execMap": {
+      "ts": "ts-node"
+    },
+    "ext": "ts",
+    "watch": [
+      "src"
+    ]
+  },
+  "dependencies": {
+    "@temporalio/activity": "~1.8.0",
+    "@temporalio/client": "~1.8.0",
+    "@temporalio/worker": "~1.8.0",
+    "@temporalio/workflow": "~1.8.0",
+    "@types/cors": "^2.8.17",
+    "axios": "^1.4.0",
+    "express": "^4.18.2",
+    "nanoid": "3.x"
+  },
+  "devDependencies": {
+    "@tsconfig/node18": "^1.0.0",
+    "@types/express": "^4.17.16",
+    "@types/node": "^18.11.43",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-deprecation": "^1.2.1",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.8.3",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.9.4"
+  }
+}
