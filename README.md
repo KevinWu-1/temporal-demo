@@ -1,10 +1,10 @@
 # Temporal Demo App
 
-This is a sample application aimed to demonstrates how to leverage Temporal in a Typescript enviroment.
+This is a sample application aimed to demonstrates how to leverage Temporal in a Typescript environment.
 
 ## Get Started
 
-Install the ncecessary dependencies
+Install the necessary dependencies
 
 ```
 # Install Docker (https://docs.docker.com/desktop/install/mac-install/)
@@ -22,11 +22,11 @@ brew install temporal
 
 ## Running With Tilt (Recommended)
 
-Tilt provides service orchistration as well as auto-refresh capabilities
+Tilt provides service orchestration as well as auto-refresh capabilities
 
 ```
 # Install package dependencies
-npm run install-all
+npm run install:all
 
 # Dev: Run the following to run all services (Temporal Cluster, Temporal Worker, Widget UI, Express Backend)
 tilt up
@@ -41,7 +41,7 @@ Run the following commands in the root directory of the project
 
 ```
 # Install package dependencies
-npm run install-all
+npm run install:all
 
 # Start the Temporal Cluster
 npm run temporal
@@ -74,19 +74,19 @@ Below are some information to get you familiar with this demo application and th
   - Shared files are located in the `packages` directory
     - Contests of this directory have been extracted from the `apps` folder for easier access between multiple services
 
-- Containerization & Orchistration
+- Containerization & Orchestration
 
   - This application is set up so that each runnable service has it's own Dockerfile
-  - Tilt is leverages as a orchistration tool and provides auto-refresh for updates
+  - Tilt is leverages as a orchestration tool and provides auto-refresh for updates
   - The dockerization of workers allow the number of workers to be easily scalable
 
 - Temporal
 
   - Temporal brings the following
-    - Durability - Workflow states are stored so that if a woker fails, state can be recovered by another worker to continue executing
+    - Durability - Workflow states are stored so that if a worker fails, state can be recovered by another worker to continue executing
       - This application, by default workflows and state will not persist after shutting down the Temporal cluster. Run `npm run temporal-persist` if you would like this functionality
     - Scalability - Temporal workflows and activities are loaded into queues for workers to process. Worker count can easily be increased for better performance
-    - Elasticity. - Temporal workflows and activities can be assigned to specific task-queues. One can dynamically allocate resources by assiging more workers to specific queues
+    - Elasticity. - Temporal workflows and activities can be assigned to specific task-queues. One can dynamically allocate resources by assigning more workers to specific queues
 
 - Tilt
 

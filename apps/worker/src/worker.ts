@@ -6,8 +6,6 @@ config();
 const TEMPORAL_CLUSTER_URL = process.env.TEMPORAL_CLUSTER_URL || 'localhost:7233';
 
 async function run() {
-  console.log('Hello Kevin');
-
   const connection = await NativeConnection.connect({
     address: TEMPORAL_CLUSTER_URL,
     // TLS and gRPC metadata configuration goes here.

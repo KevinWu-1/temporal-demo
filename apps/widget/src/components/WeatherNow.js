@@ -7,9 +7,6 @@ const WEATHER_NOW_URL = `${process.env.REACT_APP_WEATHER_BASE_URL}current.json?k
 const SERVICE_URL = process.env.SERVICE_URL || "http://localhost:3000"
 
 function WeatherNow(props) {
-  console.log(
-    "http://api.weatherapi.com/v1/current.json?key=4b95c4166a7b4bb9994180650242701&q=07306&aqi=no"
-  )
   const [currentWeather, setCurrentWeather] = useState({
     temp_c: "--",
     feelslike_c: "--",

@@ -10,8 +10,6 @@ COPY package*.json ./
 # Install app dependencies
 RUN npm install
 
-RUN cd /app/node_modules/@temporalio/common && npm install --prefix ./
-
 # Copy the rest of the application code
 COPY . .
 

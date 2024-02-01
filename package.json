@@ -8,13 +8,13 @@
   ],
   "scripts": {
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "install-all": "npm install --prefix ./ && npm install --prefix ./apps/service && npm install --prefix ./apps/worker && npm install --prefix ./apps/widget && npm install --prefix ./packages/activities && npm install --prefix ./packages/workflows && npm run install-long",
-    "install-long": "npm install --prefix ./packages/workflows/node_modules/@temporalio/common && npm install --prefix ./apps/service/node_modules/@temporalio/common",
-    "temporal": "temporal server start-dev --namespace default",
-    "worker": "cd ./apps/worker && npm run worker.watch",
-    "service": "cd ./apps/service && npm run service.watch",
+    "install:all": "npm install --prefix ./apps/service && npm install --prefix ./apps/worker && npm install --prefix ./apps/widget && npm install --prefix ./packages/activities && npm install --prefix ./packages/workflows",
+    "remove:all": "rm -rf ./**/*/node_modules",
     "widget": "cd ./apps/widget && npm run start",
-    "temporal-persist": "temporal server start-dev --namespace default --db-filename temporal.db"
+    "service": "cd ./apps/service && npm run service.watch",
+    "temporal": "temporal server start-dev --namespace default",
+    "temporal:persist": "temporal server start-dev --namespace default --db-filename temporal.db",
+    "worker": "cd ./apps/worker && npm run worker.watch"
   },
   "devDependencies": {
     "prettier": "^2.8.8",
