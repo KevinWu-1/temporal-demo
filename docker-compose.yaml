@@ -1,0 +1,83 @@
+version: "3.5"
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=temporal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - temporal-network
+
+  temporal:
+    # Uncomment the following line to use the latest version of Temporalite, or if you don't use Tilt to build the image.
+    # build: https://github.com/temporalio/temporalite.git#main
+    image: temporalite
+    ports:
+      - 7233:7233 # control plane
+      - 8233:8233 # ui
+    networks:
+      - temporal-network
+    depends_on:
+      - postgres
+
+  temporal-worker:
+    image: temporal-worker
+    build:
+      context: ./apps/worker
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./packages/workflows
+        target: /packages/workflows
+      - type: bind
+        source: ./packages/activities
+        target: /packages/activities
+    depends_on:
+      temporal:
+        condition: service_started
+    networks:
+      - temporal-network
+
+  backend:
+    image: backend
+    build:
+      context: ./apps/service
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - type: bind
+        source: ./packages/workflows
+        target: /packages/workflows
+      - type: bind
+        source: ./packages/activities
+        target: /packages/activities
+    depends_on:
+      temporal:
+        condition: service_started
+    networks:
+      - temporal-network
+
+  frontend:
+    image: frontend
+    build:
+      context: ./apps/widget
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3001
+    networks:
+      - temporal-network
+
+networks:
+  temporal-network:
+    driver: bridge
+    name: temporal-network

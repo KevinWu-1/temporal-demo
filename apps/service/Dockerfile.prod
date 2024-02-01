@@ -1,0 +1,54 @@
+# Use an official Node.js runtime as a parent image
+FROM node:14
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy only the package.json and package-lock.json to the working directory
+COPY ./apps/service/package*.json ./
+
+# Install app dependencies
+RUN npm install
+# CMD ["npm", "install", "--prefix", "./apps/widget"]
+
+# Copy the rest of the application code
+COPY ./apps/service .
+
+
+#  Copy Workflows
+
+# Copy only the package.json and package-lock.json to the working directory
+COPY ./packages/workflows/package*.json /packages/workflows/
+
+RUN ls /packages/workflows
+
+# Install app dependencies
+RUN cd /packages/workflows && npm install
+# CMD ["npm", "install", "--prefix", "./apps/widget"]
+
+# Copy the rest of the application code
+COPY ./packages/workflows /packages/workflows
+
+
+# Copy Activities
+
+# Copy only the package.json and package-lock.json to the working directory
+COPY ./packages/activities/package*.json /packages/activities/
+
+RUN ls /packages/activities
+
+# Install app dependencies
+RUN cd /packages/activities && npm install
+# CMD ["npm", "install", "--prefix", "./apps/widget"]
+
+# Copy the rest of the application code
+COPY ./packages/activities /packages/activities
+
+
+ENV TEMPORAL_CLUSTER_URL=temporal:7233
+
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Define the command to run your app
+CMD ["npm", "run", "service.watch"]
