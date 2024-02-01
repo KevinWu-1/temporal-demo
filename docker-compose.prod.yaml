@@ -32,15 +32,8 @@ services:
   temporal-worker:
     image: temporal-worker
     build:
-      context: ./apps/worker
-      dockerfile: Dockerfile
-    volumes:
-      - type: bind
-        source: ./packages/workflows
-        target: /packages/workflows
-      - type: bind
-        source: ./packages/activities
-        target: /packages/activities
+      context: .
+      dockerfile: ./apps/worker/Dockerfile.prod
     depends_on:
       temporal:
         condition: service_started
@@ -50,17 +43,10 @@ services:
   backend:
     image: backend
     build:
-      context: ./apps/service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/service/Dockerfile.prod
     ports:
       - 3000:3000
-    volumes:
-      - type: bind
-        source: ./packages/workflows
-        target: /packages/workflows
-      - type: bind
-        source: ./packages/activities
-        target: /packages/activities
     depends_on:
       temporal:
         condition: service_started
@@ -71,7 +57,7 @@ services:
     image: frontend
     build:
       context: ./apps/widget
-      dockerfile: Dockerfile
+      dockerfile: ./Dockerfile.prod
     ports:
       - 3001:3001
     networks:
